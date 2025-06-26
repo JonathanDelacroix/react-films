@@ -8,7 +8,7 @@ import { Form, Button, Container } from 'react-bootstrap'
 const schema = yup.object().shape({
   comment: yup.string().required('Le commentaire est obligatoire').max(500, 'Max 500 caractères'),
   note: yup.string().required('').oneOf(['1', '2', '3', '4', '5'], 'Veuillez sélectionner une note'),
-  acceptConditions: yup.bool().oneOf([true], 'Vous devez accepter les conditions générales')
+  acceptConditions: yup.bool().required('').oneOf([true], 'Vous devez accepter les conditions générales')
 })
 
 const CommentForm = () => {
