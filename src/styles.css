@@ -1,0 +1,9 @@
+.card {
+  border: solid 1px rgb(212, 208, 208);
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 300px;
+  width: 100%;
+}
