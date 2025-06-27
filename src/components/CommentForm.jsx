@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { addComment } from './store/commentSlice'
+import { addComment } from '../store/commentSlice'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Form, Button, Container } from 'react-bootstrap'
