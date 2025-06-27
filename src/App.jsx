@@ -43,10 +43,12 @@ function App() {
         <Col md={6}>
           {movie && (
             <Card>
-              <Card.Img variant="top" src={movie.poster_path}/>
+              <Card.Img variant="top" src={movie.poster_path} alt="{movie.original_title}"/>
               <Card.Body>
                 <Card.Title>{movie.original_title}</Card.Title>
-                <Card.Text>Sortie le {movie.release_date}</Card.Text>
+                <Card.Subtitle className="mb-2 text-muted">
+                  Sortie le {new Date(movie.release_date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'long', year: 'numeric'})}
+                </Card.Subtitle>
                 <Card.Text>{movie.overview}</Card.Text>
                 <Card.Text>Note moyenne : {movie.vote_average} ({movie.vote_count} votes)</Card.Text>
               </Card.Body>
@@ -62,14 +64,20 @@ function App() {
       <Row className="justify-content-center mt-4">
         <Col md={6}>
           {comments.length === 0 ? (
-            <p>Aucun commentaire pour l’instant.</p>
+              <Card className="mb-2">
+                <Card.Body>
+                  <Card.Text className="mb-1">Aucun commentaire pour le moment.</Card.Text>
+                </Card.Body>
+              </Card>
           ) : (
             comments.map(c => (
               <Card key={c.id} className="mb-2">
                 <Card.Body>
+                  <Card.Text className="mb-1"><strong>Note: {c.note}/5</strong></Card.Text>
                   <Card.Text>{c.comment}</Card.Text>
-                  <Card.Text><strong>Note:</strong> {c.note}/5</Card.Text>
-                  <Button variant="danger" onClick={() => handleDelete(c.id)}>Supprimer</Button>
+                  <div className="text-end">
+                    <Button variant="danger" size="sm" onClick={() => handleDelete(c.id)}>Supprimer</Button>
+                  </div>
                 </Card.Body>
               </Card>
             ))

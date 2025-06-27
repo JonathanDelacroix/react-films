@@ -18,13 +18,13 @@ const CommentForm = () => {
     defaultValues: {
       comment: "",
       note: '',
-      accepted: false,
+      acceptConditions: false,
     }
   })
 
   const onSubmit = data => {
     const commentData = {
-      id: new Date(),
+      id: new Date().toISOString(),
       comment: data.comment,
       note: data.note
     }
@@ -38,31 +38,45 @@ const CommentForm = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="comment">
           <Form.Label>Ajouter un commentaire</Form.Label>
-          <Form.Control as="textarea" {...register('comment')} />
-          <small className="text-danger">{errors.comment?.message}</small>
+          <Form.Control 
+            as="textarea"
+            rows={4}
+            maxLength={500}
+            {...register('comment')}
+            isInvalid={!!errors.comment}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.comment?.message}
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="note">
           <Form.Label>Note</Form.Label>
-          <Form.Select {...register("note")} type="select" name="note">
+          <Form.Select {...register("note")} type="select" name="note" isInvalid={!!errors.note}>
               <option value="" disabled hidden>Sélectionnez une note</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
           </Form.Select>
-          <small className="text-danger">{errors.note?.message}</small>
+          <Form.Control.Feedback type="invalid">
+            {errors.note?.message}
+          </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="accepted">
+        <Form.Group className="mb-3" controlId="acceptConditions">
           <Form.Check
-            name="accepted"
+            name="acceptConditions"
             type="checkbox"
             label="J'accepte les conditions"
             {...register('acceptConditions')}
+            isInvalid={!!errors.acceptConditions}
+            className={errors.acceptConditions ? 'is-invalid' : ''}
           />
-          <small className="text-danger">{errors.acceptConditions?.message}</small>
+          <Form.Control.Feedback type="invalid">
+            {errors.acceptConditions?.message}
+          </Form.Control.Feedback>
         </Form.Group>
-        <Button type="submit">Ajouter</Button>
+        <Button type="submit" variant="primary">Ajouter</Button>
       </Form>
     </Container>
   )

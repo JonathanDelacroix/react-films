@@ -11,10 +11,13 @@ const commentSlice = createSlice({
       state.push({ id, comment, note });
     },
     deleteComment: (state, action) => {
-      return state.filter(comment => comment.id !== action.payload)
+      const index = state.findIndex(comment => comment.id === action.payload);
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
     }
   }
-})
+});
 
 export const { addComment, deleteComment } = commentSlice.actions
 export default commentSlice.reducer
