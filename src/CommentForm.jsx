@@ -70,11 +70,9 @@ const CommentForm = () => {
             label="J'accepte les conditions"
             {...register('acceptConditions')}
             isInvalid={!!errors.acceptConditions}
-            className={errors.acceptConditions ? 'is-invalid' : ''}
+            feedback={errors.acceptConditions?.message}
+            feedbackType="invalid"
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.acceptConditions?.message}
-          </Form.Control.Feedback>
         </Form.Group>
         <Button type="submit" variant="primary">Ajouter</Button>
       </Form>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, ListGroup } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteComment } from './store/commentSlice';
 import CommentForm from './CommentForm';
@@ -43,7 +43,7 @@ function App() {
         <Col md={6}>
           {movie && (
             <Card>
-              <Card.Img variant="top" src={movie.poster_path} alt="{movie.original_title}"/>
+              <Card.Img variant="top" src={movie.poster_path} alt={movie.original_title}/>
               <Card.Body>
                 <Card.Title>{movie.original_title}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
@@ -64,23 +64,29 @@ function App() {
       <Row className="justify-content-center mt-4">
         <Col md={6}>
           {comments.length === 0 ? (
-              <Card className="mb-2">
+              <Card className="mb-2 noComment">
                 <Card.Body>
                   <Card.Text className="mb-1">Aucun commentaire pour le moment.</Card.Text>
                 </Card.Body>
               </Card>
           ) : (
-            comments.map(c => (
-              <Card key={c.id} className="mb-2">
-                <Card.Body>
-                  <Card.Text className="mb-1"><strong>Note: {c.note}/5</strong></Card.Text>
-                  <Card.Text>{c.comment}</Card.Text>
-                  <div className="text-end">
-                    <Button variant="danger" size="sm" onClick={() => handleDelete(c.id)}>Supprimer</Button>
+            <ListGroup>
+              {comments.map((c) => (
+                <ListGroup.Item key={c.id} >
+                  <div className="mb-1">
+                    <strong>Note: {c.note}/5</strong>
                   </div>
-                </Card.Body>
-              </Card>
-            ))
+                  <div className="mb-2">
+                    {c.comment}
+                  </div>
+                  <div className="text-end">
+                    <Button variant="danger" size="sm" onClick={() => handleDelete(c.id)}>
+                      Supprimer
+                    </Button>
+                  </div>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
           )}
         </Col>
       </Row>
